@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilangan Rasional — Kuis Interaktif Kelas VII</title>
+
+<!-- Font & KaTeX -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+<style>
+  :root {
+    --paper: #F8F4E8;
+    --paper-line: rgba(48,66,110,0.10);
+    --ink: #232A3B;
+    --ink-soft: #565F78;
+    --violet: #5B3E96;
+    --violet-deep: #402968;
+    --mustard: #E8B923;
+    --mustard-soft: #FBEAB0;
+    --good: #3F7A5B;
+    --good-soft: #DCEFE3;
+    --bad: #B54A3A;
+    --bad-soft: #F6DFD9;
+    --card: #FFFDF6;
+    --radius: 18px;
+    --shadow: 0 2px 0 rgba(35,42,59,0.06), 0 10px 24px -14px rgba(35,42,59,0.35);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+      repeating-linear-gradient(0deg, var(--paper-line) 0px, var(--paper-line) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, var(--paper-line) 0px, var(--paper-line) 1px, transparent 1px, transparent 34px);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', serif; font-weight: 600; margin: 0; color: var(--violet-deep); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* Topbar */
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .brandmark { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .radical-mark { font-family: 'Fraunces', serif; font-size: 28px; color: var(--violet); font-weight: 700; }
+  .brand-text { font-size: 13px; color: var(--ink-soft); font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
+  
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+  .timer-badge {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 15px; background: var(--ink);
+    color: var(--mustard-soft); padding: 6px 12px; border-radius: 10px; letter-spacing: .5px;
+  }
+  .icon-btn {
+    border: 2px solid var(--ink); background: var(--card); color: var(--ink);
+    border-radius: 999px; padding: 7px 13px; font-family: 'Nunito', sans-serif; font-weight: 700;
+    font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    box-shadow: var(--shadow); transition: transform .1s ease;
+  }
+  .icon-btn:active { transform: translateY(1px); }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px 22px;
+    margin-bottom: 16px;
+  }
+
+  /* Landing */
+  .hero { text-align: center; padding: 10px 4px 18px; }
+  .hero .radical-mark { font-size: 52px; display: block; margin: 0 auto 2px; line-height: 1; }
+  .hero h1 { font-size: clamp(22px, 5vw, 28px); line-height: 1.25; }
+  .hero p.sub { color: var(--ink-soft); font-size: 14px; margin-top: 6px; }
+
+  label.field-label { display: block; font-weight: 800; font-size: 13.5px; margin-bottom: 6px; color: var(--violet-deep); }
+  input[type="text"], input[type="password"] {
+    width: 100%; padding: 11px 14px; border-radius: 12px; border: 2px solid var(--ink);
+    font-family: 'Nunito', sans-serif; font-size: 14.5px; background: #fff; color: var(--ink);
+    margin-bottom: 14px;
+  }
+  input[type="text"]:focus, input[type="password"]:focus { outline: 3px solid var(--mustard-soft); border-color: var(--violet); }
+
+  .section-title { font-weight: 800; font-size: 13.5px; margin: 16px 0 8px; color: var(--violet-deep); text-transform: uppercase; letter-spacing: .5px; }
+
+  .submateri-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  @media (max-width: 540px) { .submateri-grid { grid-template-columns: 1fr; } }
+
+  .grid-btn {
+    text-align: left; border: 2px solid var(--ink); border-radius: 14px; padding: 11px 13px;
+    background: #fff; cursor: pointer; font-family: 'Nunito', sans-serif; color: var(--ink);
+    box-shadow: var(--shadow); transition: all .12s ease; font-weight: 700; font-size: 13.5px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .grid-btn:hover { transform: translateY(-2px); border-color: var(--violet); }
+  .grid-btn.selected { background: var(--mustard-soft); border-color: var(--violet-deep); }
+  .btn-content { display: flex; align-items: center; gap: 8px; }
+  
+  .badge-done {
+    font-size: 11px; background: var(--good-soft); color: var(--good);
+    padding: 2px 7px; border-radius: 999px; font-weight: 800; border: 1px solid var(--good);
+  }
+
+  .level-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .level-btn {
+    flex: 1; min-width: 65px; text-align: center; border: 2px solid var(--ink); border-radius: 12px; padding: 9px 6px;
+    background: #fff; cursor: pointer; font-weight: 800; font-size: 13.5px; color: var(--ink);
+    box-shadow: var(--shadow); transition: all .12s ease; position: relative;
+  }
+  .level-btn:hover { transform: translateY(-2px); }
+  .level-btn.selected { background: var(--violet); color: #fff; border-color: var(--violet-deep); }
+  .level-btn .dot-done {
+    position: absolute; top: 4px; right: 6px; font-size: 10px; color: var(--good); font-weight: 900;
+  }
+  .level-btn.selected .dot-done { color: var(--mustard); }
+
+  .download-box { display: flex; gap: 8px; margin: 10px 0 16px; flex-wrap: wrap; }
+  .compact-btn {
+    border: 2px solid var(--ink); background: #fff; color: var(--ink);
+    border-radius: 12px; padding: 8px 14px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 13px; cursor: pointer; display: inline-flex;
+    align-items: center; gap: 6px; box-shadow: var(--shadow);
+    transition: transform .1s ease, background .12s ease;
+  }
+  .compact-btn:hover { background: var(--mustard-soft); transform: translateY(-1px); }
+  .compact-btn.guru { border-color: var(--violet-deep); color: var(--violet-deep); }
+
+  .primary-btn {
+    width: 100%; padding: 13px; border-radius: 14px; border: 2px solid var(--violet-deep);
+    background: var(--violet); color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: 15px; cursor: pointer; box-shadow: var(--shadow); margin-top: 10px;
+    transition: transform .1s ease, opacity .1s ease;
+  }
+  .primary-btn:active { transform: translateY(1px); }
+  .primary-btn.accent { background: var(--mustard); color: var(--ink); border-color: var(--ink); }
+  .primary-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  .divider { display: flex; align-items: center; gap: 10px; margin: 16px 0; color: var(--ink-soft); font-size: 12px; font-weight: 700; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 2px; background: var(--paper-line); }
+
+  /* Quiz screen */
+  .quiz-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 10px; flex-wrap: wrap; }
+  .badge-tag {
+    background: var(--violet-deep); color: #fff; font-weight: 800; font-size: 12px;
+    padding: 4px 10px; border-radius: 8px; letter-spacing: .3px;
+  }
+  .progress-row { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+  .dot {
+    width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink); display: flex;
+    align-items: center; justify-content: center; font-weight: 800; font-size: 12px; background: #fff;
+    color: var(--ink); cursor: pointer; flex-shrink: 0;
+  }
+  .dot.answered { background: var(--violet); color: #fff; border-color: var(--violet-deep); }
+  .dot.current { box-shadow: 0 0 0 3px var(--mustard); }
+
+  .q-prompt { font-size: 16.5px; line-height: 1.65; margin-bottom: 18px; word-wrap: break-word; }
+  .q-prompt .katex { font-size: 1.05em; }
+
+  .option {
+    position: relative; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+    padding: 13px 15px; border-radius: 14px; border: 2px solid var(--ink); background: #fff;
+    font-family: 'Nunito', sans-serif; font-size: 15px; color: var(--ink); cursor: pointer; margin-bottom: 10px;
+    transition: background .12s ease;
+  }
+  .option .opt-letter {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+    position: relative; z-index: 2; background: #fff;
+  }
+  .option.selected { background: var(--mustard-soft); }
+  .option.selected .opt-letter { background: var(--violet); border-color: var(--violet-deep); color: #fff; }
+
+  .nav-row { display: flex; gap: 10px; margin-top: 20px; }
+  .nav-row .primary-btn { margin-top: 0; }
+  .nav-btn-secondary {
+    flex: 1; padding: 13px; border-radius: 14px; border: 2px solid var(--ink); background: #fff;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14.5px; cursor: pointer; color: var(--ink);
+  }
+  .nav-btn-secondary:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(35,42,59,0.55); display: flex; align-items: center;
+    justify-content: center; padding: 18px; z-index: 100;
+  }
+  .modal-box {
+    background: var(--card); border: 2px solid var(--ink); border-radius: 18px; padding: 24px 20px;
+    max-width: 440px; width: 100%; box-shadow: var(--shadow); max-height: 88vh; overflow-y: auto;
+  }
+  .modal-box h3 { margin-bottom: 8px; font-size: 19px; }
+  .modal-box p { font-size: 14px; color: var(--ink-soft); margin-bottom: 16px; }
+  .modal-actions { display: flex; gap: 10px; }
+
+  /* Result */
+  .score-badge-row { display: flex; justify-content: center; gap: 16px; margin: 10px 0 16px; }
+  .score-badge {
+    width: 105px; height: 105px; border-radius: 50%; border: 3.5px solid var(--violet);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff;
+  }
+  .score-badge.akhir { border-color: var(--good); }
+  .score-badge .num { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--violet-deep); line-height: 1; }
+  .score-badge.akhir .num { color: var(--good); }
+  .score-badge .denom { font-size: 10.5px; color: var(--ink-soft); font-weight: 800; text-transform: uppercase; margin-top: 2px; }
+  
+  .result-meta { display: flex; justify-content: center; gap: 18px; margin-bottom: 18px; flex-wrap: wrap; }
+  .result-meta div { text-align: center; }
+  .result-meta .k { font-size: 11px; color: var(--ink-soft); font-weight: 800; text-transform: uppercase; }
+  .result-meta .v { font-family: 'Fraunces', serif; font-size: 16.5px; font-weight: 600; }
+
+  .saran-box {
+    background: #fdf8e6; border: 2px solid var(--mustard); border-radius: 14px;
+    padding: 14px 16px; margin: 16px 0; color: #5c470a; font-size: 14px; line-height: 1.5;
+  }
+
+  .review-item {
+    border: 2px solid var(--ink); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px;
+    background: #fff;
+  }
+  .review-item.wrong-item { border-color: var(--bad); background: var(--bad-soft); }
+  .review-item.correct-item { border-color: var(--good); background: var(--good-soft); }
+
+  .correct-ans-box {
+    margin-top: 8px; background: #e6f4ea; border: 1.5px solid #34a853; color: #137333;
+    padding: 8px 12px; border-radius: 10px; font-size: 13.5px; font-weight: 700;
+  }
+  .explanation-box {
+    margin-top: 8px; background: #fff8e1; border: 1.5px solid #fbc02d; color: #5c470a;
+    padding: 10px 12px; border-radius: 10px; font-size: 13.5px; line-height: 1.45;
+  }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .btn-row > * { flex: 1; min-width: 140px; }
+
+  /* Table */
+  table.recap { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+  table.recap th, table.recap td { border: 1px solid var(--ink); padding: 7px 8px; text-align: left; }
+  table.recap th { background: var(--violet); color: #fff; font-family: 'Nunito', sans-serif; }
+  table.recap tr:nth-child(even) { background: #F3EFE2; }
+  .table-scroll { overflow-x: auto; }
+
+  /* DESAIN CETAK PDF BERSIH TANPA GARIS BUKU */
+  .print-only { display: none; }
+  @media print {
+    body, html { background: #ffffff !important; background-image: none !important; color: #000000 !important; font-size: 11pt; }
+    .no-print { display: none !important; }
+    .print-only { display: block !important; }
+
+    .print-paper { padding: 10px; font-family: 'Nunito', sans-serif; background: #ffffff !important; }
+    .print-header { text-align: center; margin-bottom: 14px; border-bottom: 2px solid #232a3b; padding-bottom: 10px; }
+    .print-header h2 { font-size: 15pt; margin: 0; color: #000000; font-family: 'Fraunces', serif; text-transform: uppercase; }
+    .print-header h3 { font-size: 11pt; margin: 4px 0 0; color: #444444; }
+    
+    .student-info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;
+      text-align: left; font-size: 10pt; background: #f8f9fa;
+      padding: 8px 12px; margin-top: 10px; border-radius: 6px; border: 1px solid #dcdcdc;
+    }
+
+    .print-saran-box {
+      margin-top: 10px; padding: 8px 12px; background: #fffbe6; border: 1px solid #ffe599;
+      border-radius: 6px; font-size: 10pt; color: #5c470a; font-weight: 600;
+    }
+
+    .print-q-item {
+      break-inside: avoid; page-break-inside: avoid;
+      margin-bottom: 10px; padding: 10px 12px; border: 1px solid #e0e0e0; border-radius: 6px; background: #ffffff;
+    }
+    .print-q-item.wrong { border-left: 4px solid #b54a3a; background: #fffafa; }
+    .print-q-item.correct { border-left: 4px solid #3f7a5b; background: #fcfdfc; }
+
+    .print-q-prompt { font-size: 10.5pt; font-weight: 700; margin-bottom: 6px; line-height: 1.4; color: #232a3b; }
+    .print-q-options {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px;
+      margin-left: 10px; font-size: 10pt;
+    }
+    .print-opt { margin-bottom: 2px; }
+    .print-kj-box {
+      margin-top: 8px; background: #f0f4f8; border-left: 3px solid #5b3e96;
+      padding: 6px 10px; font-size: 9.5pt; border-radius: 4px; line-height: 1.4;
+    }
+
+    table.recap { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin-top: 10px; }
+    table.recap th, table.recap td { border: 1px solid #cccccc; padding: 6px 8px; text-align: left; }
+    table.recap th { background: #f0f0f0 !important; color: #000000 !important; font-weight: bold; }
+    table.recap tr:nth-child(even) { background: #fafafa !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap no-print">
+  <div class="topbar">
+    <div class="brandmark" id="brandBtn">
+      <span class="radical-mark">½</span>
+      <span class="brand-text">BILANGAN RASIONAL</span>
+    </div>
+    <div class="topbar-right">
+      <div class="timer-badge" id="timerBadge" style="display:none;">00:00</div>
+      <button class="icon-btn" id="btnStudentHistory">📜 Riwayat Saya</button>
+      <button class="icon-btn" id="btnHome">🏠 Beranda</button>
+      <button class="icon-btn" id="btnTeacher">🔒 Rekap Guru</button>
+    </div>
+  </div>
+
+  <div id="screen-root"></div>
+</div>
+
+<div id="modal-root" class="no-print"></div>
+<div id="print-root" class="print-only"></div>
+
+<script>
+/* =========================================================
+   1. KONFIGURASI & GOOGLE APPS SCRIPT
+========================================================= */
+
+const URL_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbzzHReDy_W3VGmBBXcf52FaztPO2akCfdm9c3PJQ9rD7wCKarY4BmlR3oGMN8pn_yoo/exec";
+
+const CONFIG = {
+  GAS_URL: URL_GOOGLE_SCRIPT || localStorage.getItem('br_gas_url') || '',
+  TEACHER_PASSWORD: localStorage.getItem('br_teacher_pw') || 'guru123'
+};
+
+/* =========================================================
+   2. BANK SOAL BILANGAN RASIONAL KELAS VII (DISESUAIKAN SANGAT RELEVAN)
+========================================================= */
+const MATERI_LABELS = {
+  a: "Mengenal Bilangan Rasional",
+  b: "Membandingkan Bilangan Rasional",
+  c: "Operasi Hitung Bilangan Rasional",
+  d: "Penerapan Bilangan Rasional"
+};
+
+const MATERI_ICONS = { a:"📘", b:"📊", c:"➗", d:"🎯" };
+
+const QUESTIONS = {
+  "a": [
+    {"id": "a1-1", "sub": "a1", "level": 1, "prompt": "Bentuk pecahan biasa $\\dfrac{a}{b}$ dari bilangan bulat $7$ adalah ....", "options": ["$\\dfrac{7}{1}$", "$\\dfrac{1}{7}$", "$\\dfrac{7}{7}$", "$\\dfrac{0}{7}$"], "answer": 0, "penjelasan": "Setiap bilangan bulat $n$ dapat dituliskan dalam bentuk pecahan $\\dfrac{n}{1}$. Jadi $7 = \\dfrac{7}{1}$."},
+    {"id": "a1-2", "sub": "a1", "level": 1, "prompt": "Bentuk pecahan biasa dari pecahan campuran $2\\dfrac{1}{4}$ adalah ....", "options": ["$\\dfrac{9}{4}$", "$\\dfrac{8}{4}$", "$\\dfrac{7}{4}$", "$\\dfrac{9}{8}$"], "answer": 0, "penjelasan": "$2\\dfrac{1}{4} = \\dfrac{(2 \\times 4) + 1}{4} = \\dfrac{9}{4}$."},
+    {"id": "a1-3", "sub": "a1", "level": 1, "prompt": "Bentuk pecahan biasa paling sederhana dari desimal $0{,}6$ adalah ....", "options": ["$\\dfrac{3}{5}$", "$\\dfrac{6}{10}$", "$\\dfrac{3}{10}$", "$\\dfrac{6}{5}$"], "answer": 0, "penjelasan": "$0{,}6 = \\dfrac{6}{10}$. Jika pembilang dan penyebut dibagi 2, menjadi $\\dfrac{3}{5}$."},
+    {"id": "a1-4", "sub": "a1", "level": 1, "prompt": "Bentuk pecahan biasa paling sederhana dari $40\\%$ adalah ....", "options": ["$\\dfrac{2}{5}$", "$\\dfrac{4}{10}$", "$\\dfrac{4}{5}$", "$\\dfrac{1}{4}$"], "answer": 0, "penjelasan": "$40\\% = \\dfrac{40}{100} = \\dfrac{2}{5}$."},
+    {"id": "a1-5", "sub": "a1", "level": 1, "prompt": "Manakah di antara bilangan berikut yang MERUPAKAN bilangan rasional?", "options": ["$\\dfrac{3}{4}$", "$\\pi$", "$\\sqrt{2}$", "$\\sqrt{3}$"], "answer": 0, "penjelasan": "Bilangan rasional adalah bilangan yang dapat dinyatakan dalam bentuk $\\dfrac{a}{b}$ dengan $a,b$ bulat dan $b \\neq 0$."},
+    {"id": "a1-6", "sub": "a1", "level": 1, "prompt": "Bentuk desimal dari pecahan $\\dfrac{3}{8}$ adalah ....", "options": ["$0{,}375$", "$0{,}380$", "$0{,}625$", "$0{,}830$"], "answer": 0, "penjelasan": "$\\dfrac{3}{8} = 3 \\div 8 = 0{,}375$."},
+    {"id": "a2-1", "sub": "a2", "level": 2, "prompt": "Bentuk pecahan biasa $\\dfrac{a}{b}$ dari pecahan campuran negatif $-3\\dfrac{2}{5}$ adalah ....", "options": ["$-\\dfrac{17}{5}$", "$\\dfrac{-15}{5}$", "$\\dfrac{-13}{5}$", "$\\dfrac{17}{5}$"], "answer": 0, "penjelasan": "$-3\\dfrac{2}{5} = -\\dfrac{(3 \\times 5) + 2}{5} = -\\dfrac{17}{5}$."},
+    {"id": "a2-2", "sub": "a2", "level": 2, "prompt": "Nilai dari $\\sqrt{36}$ jika dituliskan dalam bentuk pecahan biasa $\\dfrac{a}{b}$ adalah ....", "options": ["$\\dfrac{6}{1}$", "$\\dfrac{36}{1}$", "$\\dfrac{1}{6}$", "$\\dfrac{18}{1}$"], "answer": 0, "penjelasan": "$\\sqrt{36} = 6 = \\dfrac{6}{1}$. Karena dapat dinyatakan dalam $\\dfrac{a}{b}$, ini adalah bilangan rasional."},
+    {"id": "a2-3", "sub": "a2", "level": 2, "prompt": "Pernyataan yang BENAR mengenai desimal berulang $0{,}333...$ adalah ....", "options": ["Merupakan bilangan rasional karena dapat diubah menjadi $\\dfrac{1}{3}$", "Bukan bilangan rasional karena angka di belakang koma tak hingga", "Merupakan desimal terbatas", "Sama nilainya dengan $0{,}3$"], "answer": 0, "penjelasan": "Desimal tak hingga berulang teratur adalah bilangan rasional karena $0{,}333... = \\dfrac{1}{3}$."},
+    {"id": "a2-4", "sub": "a2", "level": 2, "prompt": "Ubah desimal negatif $-0{,}45$ menjadi bentuk pecahan biasa paling sederhana!", "options": ["$-\\dfrac{9}{20}$", "$\\dfrac{-45}{100}$", "$-\\dfrac{9}{10}$", "$\\dfrac{-4}{5}$"], "answer": 0, "penjelasan": "$-0{,}45 = -\\dfrac{45}{100} = -\\dfrac{9}{20}$."},
+    {"id": "a3-1", "sub": "a3", "level": 3, "prompt": "Bentuk pecahan biasa paling sederhana dari desimal berulang $0{,}454545...$ adalah ....", "options": ["$\\dfrac{5}{11}$", "$\\dfrac{45}{100}$", "$\\dfrac{9}{20}$", "$\\dfrac{4}{9}$"], "answer": 0, "penjelasan": "Misal $x = 0{,}4545...$, maka $100x = 45{,}4545...$. Pengurangan menghasilkan $99x = 45 \\implies x = \\dfrac{45}{99} = \\dfrac{5}{11}$."},
+    {"id": "a3-2", "sub": "a3", "level": 3, "prompt": "Bentuk pecahan biasa dari $-5\\dfrac{3}{8}$ adalah ....", "options": ["$-\\dfrac{43}{8}$", "$-\\dfrac{40}{8}$", "$-\\dfrac{45}{8}$", "$\\dfrac{43}{8}$"], "answer": 0, "penjelasan": "$-5\\dfrac{3}{8} = -\\dfrac{(5 \\times 8) + 3}{8} = -\\dfrac{43}{8}$."},
+    {"id": "a3-3", "sub": "a3", "level": 3, "prompt": "Di antara bilangan: (i) $\\sqrt{25}$, (ii) $\\sqrt{8}$, (iii) $0{,}121212...$, (iv) $\\pi$, manakah yang KEDUANYA merupakan bilangan rasional?", "options": ["(i) dan (iii)", "(i) dan (ii)", "(ii) dan (iv)", "(iii) dan (iv)"], "answer": 0, "penjelasan": "$\\sqrt{25} = 5$ (rasional) dan $0{,}1212... = \\dfrac{4}{33}$ (rasional). Sedangkan $\\sqrt{8}$ dan $\\pi$ irasional."}
+  ],
+  "b": [
+    {"id": "b1-1", "sub": "b1", "level": 1, "prompt": "Bandingkan dua pecahan: $\\dfrac{3}{5}$ ... $\\dfrac{4}{5}$. Tanda ketidaksamaan yang tepat adalah ....", "options": ["$<$", "$>$", "$=$", "$\\ge$"], "answer": 0, "penjelasan": "Penyebut sudah sama ($5$). Karena $3 < 4$, maka $\\dfrac{3}{5} < \\dfrac{4}{5}$."},
+    {"id": "b1-2", "sub": "b1", "level": 1, "prompt": "Tanda yang tepat untuk membandingkan $0{,}7$ ... $0{,}65$ adalah ....", "options": ["$>$", "$<$", "$=$", "$\\le$"], "answer": 0, "penjelasan": "$0{,}7 = 0{,}70$. Karena $0{,}70 > 0{,}65$, maka $0{,}7 > 0{,}65$."},
+    {"id": "b1-3", "sub": "b1", "level": 1, "prompt": "Pasangan pecahan berikut yang senilai (bernilai sama) adalah ....", "options": ["$\\dfrac{1}{2}$ dan $\\dfrac{3}{6}$", "$\\dfrac{2}{3}$ dan $\\dfrac{3}{4}$", "$\\dfrac{4}{5}$ dan $\\dfrac{5}{6}$", "$\\dfrac{1}{3}$ dan $\\dfrac{2}{5}$"], "answer": 0, "penjelasan": "$\\dfrac{3}{6}$ disederhanakan dengan membagi pembilang dan penyebut dengan 3 menghasilkan $\\dfrac{1}{2}$."},
+    {"id": "b1-4", "sub": "b1", "level": 1, "prompt": "Bandingkan pecahan $\\dfrac{1}{2}$ ... $\\dfrac{2}{5}$. Tanda yang sesuai adalah ....", "options": ["$>$", "$<$", "$=$", "$\\le$"], "answer": 0, "penjelasan": "Samakan penyebut: $\\dfrac{1}{2} = \\dfrac{5}{10}$ dan $\\dfrac{2}{5} = \\dfrac{4}{10}$. Karena $5 > 4$, maka $\\dfrac{1}{2} > \\dfrac{2}{5}$."},
+    {"id": "b2-1", "sub": "b2", "level": 2, "prompt": "Bandingkan bilangan negatif: $-\\dfrac{3}{4}$ ... $-\\dfrac{1}{2}$. Tanda yang tepat adalah ....", "options": ["$<$", "$>$", "$=$", "$\\ge$"], "answer": 0, "penjelasan": "$-\\dfrac{3}{4} = -0{,}75$ dan $-\\dfrac{1}{2} = -0{,}50$. Pada garis bilangan, $-0{,}75$ berada di sebelah kiri $-0{,}50$, sehingga $-\\dfrac{3}{4} < -\\dfrac{1}{2}$."},
+    {"id": "b2-2", "sub": "b2", "level": 2, "prompt": "Di antara bilangan $0{,}85$, $\\dfrac{4}{5}$, $75\\%$, dan $\\dfrac{7}{10}$, manakah yang nilainya TERBESAR?", "options": ["$0{,}85$", "$\\dfrac{4}{5}$", "$75\\%$", "$\\dfrac{7}{10}$"], "answer": 0, "penjelasan": "Konversi desimal: $0{,}85$; $\\dfrac{4}{5} = 0{,}80$; $75\\% = 0{,}75$; $\\dfrac{7}{10} = 0{,}70$. Nilai terbesar $0{,}85$."},
+    {"id": "b2-3", "sub": "b2", "level": 2, "prompt": "Urutan pecahan $\\dfrac{2}{3}$, $\\dfrac{1}{2}$, dan $\\dfrac{3}{4}$ dari yang TERKECIL ke TERBESAR adalah ....", "options": ["$\\dfrac{1}{2},\\ \\dfrac{2}{3},\\ \\dfrac{3}{4}$", "$\\dfrac{2}{3},\\ \\dfrac{1}{2},\\ \\dfrac{3}{4}$", "$\\dfrac{3}{4},\\ \\dfrac{2}{3},\\ \\dfrac{1}{2}$", "$\\dfrac{1}{2},\\ \\dfrac{3}{4},\\ \\dfrac{2}{3}$"], "answer": 0, "penjelasan": "Desimal: $\\dfrac{1}{2} = 0{,}50$; $\\dfrac{2}{3} \\approx 0{,}67$; $\\dfrac{3}{4} = 0{,}75$. Urutan terkecil ke terbesar: $\\dfrac{1}{2},\\ \\dfrac{2}{3},\\ \\dfrac{3}{4}$."},
+    {"id": "b3-1", "sub": "b3", "level": 3, "prompt": "Urutan TURUN (dari yang terbesar) dari bilangan $-0{,}3;\\ -\\dfrac{1}{2};\\ -0{,}75;\\ -\\dfrac{2}{5}$ adalah ....", "options": ["$-0{,}3;\\ -\\dfrac{2}{5};\\ -\\dfrac{1}{2};\\ -0{,}75$", "$-0{,}75;\\ -\\dfrac{1}{2};\\ -\\dfrac{2}{5};\\ -0{,}3$", "$-\\dfrac{2}{5};\\ -0{,}3;\\ -\\dfrac{1}{2};\\ -0{,}75$", "$-0{,}3;\\ -\\dfrac{1}{2};\\ -\\dfrac{2}{5};\\ -0{,}75$"], "answer": 0, "penjelasan": "Ubah desimal: $-0{,}3$; $-\\dfrac{2}{5} = -0{,}4$; $-\\dfrac{1}{2} = -0{,}5$; $-0{,}75$. Dari terbesar (mendekati 0): $-0{,}3 > -0{,}4 > -0{,}5 > -0{,}75$."},
+    {"id": "b3-2", "sub": "b3", "level": 3, "prompt": "Sebuah pecahan terletak tepat di tengah-tengah antara $\\dfrac{1}{3}$ dan $\\dfrac{1}{2}$. Pecahan tersebut adalah ....", "options": ["$\\dfrac{5}{12}$", "$\\dfrac{2}{5}$", "$\\dfrac{3}{7}$", "$\\dfrac{4}{9}$"], "answer": 0, "penjelasan": "Nilai tengah $= \\dfrac{\\frac{1}{3} + \\frac{1}{2}}{2} = \\dfrac{\\frac{2}{6} + \\frac{3}{6}}{2} = \\dfrac{\\frac{5}{6}}{2} = \\dfrac{5}{12}$."},
+    {"id": "b3-3", "sub": "b3", "level": 3, "prompt": "Tanda ketidaksamaan yang tepat untuk mengisi $-1\\dfrac{1}{4}$ ... $-1{,}3$ adalah ....", "options": ["$>$", "$<$", "$=$", "$\\le$"], "answer": 0, "penjelasan": "$-1\\dfrac{1}{4} = -1{,}25$. Pada garis bilangan, $-1{,}25$ terletak di sebelah kanan $-1{,}30$, maka $-1{,}25 > -1{,}30$."}
+  ],
+  "c": [
+    {"id": "c1-1", "sub": "c1", "level": 1, "prompt": "Hasil penjumlahan pecahan sepenyebut $\\dfrac{2}{7} + \\dfrac{3}{7}$ adalah ....", "options": ["$\\dfrac{5}{7}$", "$\\dfrac{5}{14}$", "$\\dfrac{6}{7}$", "$\\dfrac{1}{7}$"], "answer": 0, "penjelasan": "Penyebut sudah sama ($7$), jumlahkan pembilang: $\\dfrac{2 + 3}{7} = \\dfrac{5}{7}$."},
+    {"id": "c1-2", "sub": "c1", "level": 1, "prompt": "Hasil pengurangan desimal $4{,}8 - 1{,}35$ adalah ....", "options": ["$3{,}45$", "$3{,}55$", "$3{,}15$", "$2{,}45$"], "answer": 0, "penjelasan": "Pengurangan bersusun: $4{,}80 - 1{,}35 = 3{,}45$."},
+    {"id": "c1-3", "sub": "c1", "level": 1, "prompt": "Hasil perkalian pecahan $\\dfrac{3}{4} \\times \\dfrac{2}{5}$ dalam bentuk paling sederhana adalah ....", "options": ["$\\dfrac{3}{10}$", "$\\dfrac{6}{20}$", "$\\dfrac{5}{9}$", "$\\dfrac{6}{9}$"], "answer": 0, "penjelasan": "$\\dfrac{3 \\times 2}{4 \\times 5} = \\dfrac{6}{20} = \\dfrac{3}{10}$."},
+    {"id": "c1-4", "sub": "c1", "level": 1, "prompt": "Hasil pembagian desimal $3{,}6 \\div 0{,}6$ adalah ....", "options": ["$6$", "$0{,}6$", "$60$", "$0{,}06$"], "answer": 0, "penjelasan": "$\\dfrac{3{,}6}{0{,}6} = \\dfrac{36}{6} = 6$."},
+    {"id": "c1-5", "sub": "c1", "level": 1, "prompt": "Hasil penjumlahan desimal $1{,}25 + 2{,}4$ adalah ....", "options": ["$3{,}65$", "$3{,}29$", "$2{,}65$", "$3{,}80$"], "answer": 0, "penjelasan": "$1{,}25 + 2{,}40 = 3{,}65$."},
+    {"id": "c1-6", "sub": "c1", "level": 1, "prompt": "Hasil pengurangan pecahan $\\dfrac{5}{6} - \\dfrac{1}{3}$ adalah ....", "options": ["$\\dfrac{1}{2}$", "$\\dfrac{4}{3}$", "$\\dfrac{1}{3}$", "$\\dfrac{1}{6}$"], "answer": 0, "penjelasan": "Samakan penyebut: $\\dfrac{5}{6} - \\dfrac{2}{6} = \\dfrac{3}{6} = \\dfrac{1}{2}$."},
+    {"id": "c2-1", "sub": "c2", "level": 2, "prompt": "Hasil penjumlahan pecahan beda penyebut $\\dfrac{2}{5} + \\dfrac{1}{3}$ adalah ....", "options": ["$\\dfrac{11}{15}$", "$\\dfrac{3}{8}$", "$\\dfrac{3}{15}$", "$\\dfrac{7}{15}$"], "answer": 0, "penjelasan": "KPK penyebut 5 dan 3 adalah 15: $\\dfrac{6}{15} + \\dfrac{5}{15} = \\dfrac{11}{15}$."},
+    {"id": "c2-2", "sub": "c2", "level": 2, "prompt": "Hasil perkalian pecahan campuran $1\\dfrac{1}{2} \\times 2\\dfrac{2}{3}$ adalah ....", "options": ["$4$", "$3\\dfrac{1}{3}$", "$2\\dfrac{2}{6}$", "$4\\dfrac{1}{2}$"], "answer": 0, "penjelasan": "Ubah ke pecahan biasa: $\\dfrac{3}{2} \\times \\dfrac{8}{3} = \\dfrac{24}{6} = 4$."},
+    {"id": "c2-3", "sub": "c2", "level": 2, "prompt": "Hasil penjumlahan bilangan rasional negatif $-\\dfrac{3}{5} + \\dfrac{1}{2}$ adalah ....", "options": ["$-\\dfrac{1}{10}$", "$\\dfrac{1}{10}$", "$-\\dfrac{2}{3}$", "$-\\dfrac{4}{5}$"], "answer": 0, "penjelasan": "Samakan penyebut menjadi 10: $-\\dfrac{6}{10} + \\dfrac{5}{10} = -\\dfrac{1}{10}$."},
+    {"id": "c2-4", "sub": "c2", "level": 2, "prompt": "Hasil pembagian pecahan $\\dfrac{3}{4} \\div \\dfrac{9}{10}$ adalah ....", "options": ["$\\dfrac{5}{6}$", "$\\dfrac{27}{40}$", "$\\dfrac{6}{5}$", "$\\dfrac{4}{3}$"], "answer": 0, "penjelasan": "Ubah pembagian menjadi perkalian kebalikan: $\\dfrac{3}{4} \\times \\dfrac{10}{9} = \\dfrac{30}{36} = \\dfrac{5}{6}$."},
+    {"id": "c2-5", "sub": "c2", "level": 2, "prompt": "Hasil dari $-2{,}5 \\times 0{,}4$ adalah ....", "options": ["$-1{,}0$", "$-10{,}0$", "$1{,}0$", "$-0{,}1$"], "answer": 0, "penjelasan": "Negatif dikali positif adalah negatif: $-(2{,}5 \\times 0{,}4) = -1{,}0$."},
+    {"id": "c3-1", "sub": "c3", "level": 3, "prompt": "Hasil operasi campuran $3{,}5 - 1{,}75 + 2{,}25$ adalah ....", "options": ["$4{,}0$", "$3{,}75$", "$4{,}25$", "$3{,}5$"], "answer": 0, "penjelasan": "Urut dari kiri: $3{,}5 - 1{,}75 = 1{,}75$. Lalu $1{,}75 + 2{,}25 = 4{,}0$."},
+    {"id": "c3-2", "sub": "c3", "level": 3, "prompt": "Hasil dari $\\left(1\\dfrac{1}{2} + 2\\dfrac{1}{3}\\right) \\div 0{,}5$ adalah ....", "options": ["$7\\dfrac{2}{3}$", "$6\\dfrac{1}{3}$", "$8\\dfrac{1}{2}$", "$3\\dfrac{5}{6}$"], "answer": 0, "penjelasan": "Hitung dalam kurung: $1\\dfrac{1}{2} + 2\\dfrac{1}{3} = \\dfrac{3}{2} + \\dfrac{7}{3} = \\dfrac{23}{6}$. Lalu bagi dengan $0{,}5 = \\dfrac{1}{2}$: $\\dfrac{23}{6} \\times 2 = \\dfrac{23}{3} = 7\\dfrac{2}{3}$."},
+    {"id": "c3-3", "sub": "c3", "level": 3, "prompt": "Hasil dari $\\dfrac{3}{4} \\times \\left(-\\dfrac{2}{3}\\right) + \\dfrac{5}{6}$ adalah ....", "options": ["$\\dfrac{1}{3}$", "$-\\dfrac{1}{3}$", "$\\dfrac{1}{2}$", "$-\\dfrac{1}{6}$"], "answer": 0, "penjelasan": "Perkalian dahulu: $\\dfrac{3}{4} \\times \\left(-\\dfrac{2}{3}\\right) = -\\dfrac{1}{2}$. Lalu jumlahkan: $-\\dfrac{1}{2} + \\dfrac{5}{6} = -\\dfrac{3}{6} + \\dfrac{5}{6} = \\dfrac{2}{6} = \\dfrac{1}{3}$."},
+    {"id": "c3-4", "sub": "c3", "level": 3, "prompt": "Nilai dari $75\\% \\div 0{,}25 \\times \\dfrac{1}{3}$ adalah ....", "options": ["$1$", "$\\dfrac{1}{4}$", "$3$", "$0{,}75$"], "answer": 0, "penjelasan": "Ubah ke pecahan: $\\left(\\dfrac{3}{4} \\div \\dfrac{1}{4}\\right) \\times \\dfrac{1}{3} = 3 \\times \\dfrac{1}{3} = 1$."}
+  ],
+  "d": [
+    {"id": "d1-1", "sub": "d1", "level": 1, "prompt": "Di kelas VII A terdapat 20 murid perempuan dan 15 murid laki-laki. Pecahan yang menyatakan perbandingan murid perempuan terhadap SELURUH murid adalah ....", "options": ["$\\dfrac{4}{7}$", "$\\dfrac{3}{7}$", "$\\dfrac{4}{3}$", "$\\dfrac{3}{4}$"], "answer": 0, "penjelasan": "Total murid $= 20 + 15 = 35$. Perbandingan $= \\dfrac{20}{35} = \\dfrac{4}{7}$."},
+    {"id": "d1-2", "sub": "d1", "level": 1, "prompt": "Ibu membeli $0{,}75\\text{ kg}$ gula pasir. Digunakan untuk membuat teh manis $0{,}25\\text{ kg}$. Sisa gula pasir Ibu sekarang adalah ....", "options": ["$0{,}50\\text{ kg}$", "$0{,}25\\text{ kg}$", "$0{,}70\\text{ kg}$", "$1{,}00\\text{ kg}$"], "answer": 0, "penjelasan": "$0{,}75 - 0{,}25 = 0{,}50\\text{ kg}$."},
+    {"id": "d1-3", "sub": "d1", "level": 1, "prompt": "Budi memiliki tali sepanjang $2\\dfrac{1}{2}\\text{ meter}$. Tali tersebut dipotong sepanjang $\\dfrac{3}{4}\\text{ meter}$. Sisa panjang tali Budi adalah ....", "options": ["$1\\dfrac{3}{4}\\text{ meter}$", "$1\\dfrac{1}{2}\\text{ meter}$", "$1\\dfrac{1}{4}\\text{ meter}$", "$2\\dfrac{1}{4}\\text{ meter}$"], "answer": 0, "penjelasan": "$2\\dfrac{1}{2} - \\dfrac{3}{4} = \\dfrac{10}{4} - \\dfrac{3}{4} = \\dfrac{7}{4} = 1\\dfrac{3}{4}\\text{ meter}$."},
+    {"id": "d2-1", "sub": "d2", "level": 2, "prompt": "Harga sepasang sepatu adalah Rp200.000,00. Toko memberikan diskon sebesar $15\\%$. Besar potongan harga yang didapat pembeli adalah ....", "options": ["Rp30.000,00", "Rp25.000,00", "Rp170.000,00", "Rp15.000,00"], "answer": 0, "penjelasan": "Diskon $= 15\\% \\times 200.000 = \\text{Rp}30.000,00$."},
+    {"id": "d2-2", "sub": "d2", "level": 2, "prompt": "Pak Ahmad memiliki sebidang tanah. Sebanyak $\\dfrac{2}{5}$ bagian ditanami jagung dan $\\dfrac{1}{3}$ bagian ditanami padi. Berapa bagian total tanah yang sudah ditanami?", "options": ["$\\dfrac{11}{15}$", "$\\dfrac{3}{8}$", "$\\dfrac{2}{15}$", "$\\dfrac{7}{15}$"], "answer": 0, "penjelasan": "Total tanah ditanami $= \\dfrac{2}{5} + \\dfrac{1}{3} = \\dfrac{6+5}{15} = \\dfrac{11}{15}$ bagian."},
+    {"id": "d2-3", "sub": "d2", "level": 2, "prompt": "Kupon belanja memberikan potongan harga $\\dfrac{1}{5}$ dari harga total. Jika total belanjaan Ani Rp150.000,00, berapa uang yang harus dibayar Ani?", "options": ["Rp120.000,00", "Rp30.000,00", "Rp125.000,00", "Rp100.000,00"], "answer": 0, "penjelasan": "Potongan $= \\dfrac{1}{5} \\times 150.000 = \\text{Rp}30.000,00$. Dibayar $= 150.000 - 30.000 = \\text{Rp}120.000,00$."},
+    {"id": "d3-1", "sub": "d3", "level": 3, "prompt": "Seorang pedagang membawa $15\\dfrac{1}{2}\\text{ kg}$ beras. Pagi hari terjual $6\\dfrac{3}{4}\\text{ kg}$ dan sore hari terjual $4\\dfrac{1}{5}\\text{ kg}$. Sisa beras pedagang tersebut adalah ....", "options": ["$4\\dfrac{11}{20}\\text{ kg}$", "$4\\dfrac{9}{20}\\text{ kg}$", "$5\\dfrac{1}{20}\\text{ kg}$", "$3\\dfrac{19}{20}\\text{ kg}$"], "answer": 0, "penjelasan": "Sisa $= 15\\dfrac{1}{2} - 6\\dfrac{3}{4} - 4\\dfrac{1}{5} = \\dfrac{310 - 135 - 84}{20} = \\dfrac{91}{20} = 4\\dfrac{11}{20}\\text{ kg}$."},
+    {"id": "d3-2", "sub": "d3", "level": 3, "prompt": "Pak Joni membagikan warisan kepada 3 anaknya. Anak pertama mendapat $\\dfrac{3}{8}$ bagian, anak kedua mendapat $\\dfrac{1}{4}$ bagian, dan sisanya untuk anak ketiga. Berapa bagian untuk anak ketiga?", "options": ["$\\dfrac{3}{8}$", "$\\dfrac{5}{8}$", "$\\dfrac{1}{2}$", "$\\dfrac{1}{8}$"], "answer": 0, "penjelasan": "Bagian anak ketiga $= 1 - \\left(\\dfrac{3}{8} + \\dfrac{2}{8}\\right) = 1 - \\dfrac{5}{8} = \\dfrac{3}{8}$ bagian."}
+  ]
+};
+
+/* =========================================================
+   3. STATE APLIKASI
+========================================================= */
+let state = {
+  screen: 'landing',
+  nama: '',
+  submateri: 'a',
+  level: 1,
+  jumlahSoal: 5,
+  mode: 'materi',
+  isRetry: false,
+  questions: [],
+  idx: 0,
+  jawaban: [],
+  detik: 0,
+  timerHandle: null,
+  hasilTerakhir: null,
+  rekapRecordCurrent: null
+};
+
+function renderMath(el){
+  if(window.renderMathInElement){
+    renderMathInElement(el, {
+      delimiters:[
+        {left:'$$', right:'$$', display:true},
+        {left:'$', right:'$', display:false}
+      ],
+      throwOnError:false
+    });
+  }
+}
+
+function fmtWaktu(detik){
+  const m = Math.floor(detik/60).toString().padStart(2,'0');
+  const s = (detik%60).toString().padStart(2,'0');
+  return m+':'+s;
+}
+
+function escapeHtml(s){
+  return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startTimer(){
+  clearInterval(state.timerHandle);
+  document.getElementById('timerBadge').style.display = 'block';
+  state.timerHandle = setInterval(()=>{
+    state.detik++;
+    document.getElementById('timerBadge').textContent = fmtWaktu(state.detik);
+  }, 1000);
+}
+
+function stopTimer(){
+  clearInterval(state.timerHandle);
+  document.getElementById('timerBadge').style.display = 'none';
+}
+
+/* SARAN PERBAIKAN RINGKAS */
+function generateSaranPerbaikan(skor) {
+  if (skor >= 90) return "Sangat baik! Pertahankan ketelitian hitung dan siap lanjut ke materi berikutnya.";
+  if (skor >= 70) return "Cukup baik. Tingkatkan ketelitian pada operasi hitung campuran desimal & pecahan.";
+  if (skor >= 50) return "Perlu lebih banyak latihan. Fokuskan belajar pada konversi bentuk bilangan & tanda negatif.";
+  return "Perlu bimbingan intensif. Pelajari kembali konsep dasar bilangan rasional & penyamaan penyebut.";
+}
+
+function getRiwayatLokal() {
+  return JSON.parse(localStorage.getItem('br_rekap') || '[]');
+}
+
+function getBestScore(subKey, levelNum) {
+  const list = getRiwayatLokal();
+  const subLabel = MATERI_LABELS[subKey];
+  const filtered = list.filter(r => r.submateri === subLabel && (r.level === 'Lv. ' + levelNum || r.level == levelNum));
+  if (filtered.length === 0) return null;
+  return Math.max(...filtered.map(r => r.skorAkhir));
+}
+
+function getQuestionPool(subKey, lvNum, targetCount) {
+  let pool = QUESTIONS[subKey] ? QUESTIONS[subKey].filter(q => q.level === lvNum) : [];
+  if (pool.length < targetCount && QUESTIONS[subKey]) {
+    const fallbackSub = QUESTIONS[subKey].filter(q => q.level !== lvNum);
+    pool = [...pool, ...fallbackSub];
+  }
+  if (pool.length < targetCount) {
+    const allOther = [...QUESTIONS.a, ...QUESTIONS.b, ...QUESTIONS.c, ...QUESTIONS.d];
+    pool = [...pool, ...allOther.filter(q => !pool.some(p => p.id === q.id))];
+  }
+  return shuffle(pool).slice(0, targetCount);
+}
+
+/* =========================================================
+   4. RENDER: LANDING / BERANDA
+========================================================= */
+function renderLanding(){
+  const root = document.getElementById('screen-root');
+  
+  root.innerHTML = `
+    <div class="card">
+      <div class="hero">
+        <span class="radical-mark">½</span>
+        <h1>Bilangan Rasional — Kelas VII</h1>
+        <p class="sub">Pilih sub-materi dan level di bawah ini untuk memulai latihan.</p>
+      </div>
+
+      <label class="field-label" for="inpNama">Nama Lengkap Siswa</label>
+      <input type="text" id="inpNama" placeholder="Contoh: Ayu Kirana Putri" value="${escapeHtml(state.nama)}">
+
+      <div class="section-title">1. Pilih Sub-Materi</div>
+      <div class="submateri-grid">
+        ${Object.keys(MATERI_LABELS).map(key => {
+          const best = Math.max(getBestScore(key, 1)||0, getBestScore(key, 2)||0, getBestScore(key, 3)||0);
+          const done = best > 0;
+          return `
+            <button class="grid-btn ${state.submateri === key ? 'selected' : ''}" data-sub="${key}">
+              <div class="btn-content">
+                <span>${MATERI_ICONS[key]}</span>
+                <span>${MATERI_LABELS[key]}</span>
+              </div>
+              ${done ? `<span class="badge-done">✓ Nilai: ${best}</span>` : ''}
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="section-title">2. Pilih Level</div>
+      <div class="level-row">
+        ${[1, 2, 3].map(lv => {
+          const bestLv = getBestScore(state.submateri, lv);
+          return `
+            <button class="level-btn ${state.level === lv ? 'selected' : ''}" data-lv="${lv}">
+              Level ${lv}
+              ${bestLv !== null ? `<span class="dot-done">✓ ${bestLv}</span>` : ''}
+            </button>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="section-title">3. Jumlah Soal</div>
+      <div class="level-row">
+        ${[5, 10, 15, 25].map(cnt => `
+          <button class="level-btn ${state.jumlahSoal === cnt ? 'selected' : ''}" data-cnt="${cnt}">
+            ${cnt} Soal
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="download-box">
+        <button class="compact-btn" id="btnDlSoal">📩 Unduh Soal (PDF)</button>
+        <button class="compact-btn guru" id="btnDlSoalKJ">🔒 Unduh Soal + KJ (Guru)</button>
+      </div>
+
+      <button class="primary-btn" id="btnMulai">Mulai Kuis Sub-Materi</button>
+
+      <div class="divider">ATAU</div>
+
+      <button class="primary-btn accent" id="btnFinalExam">
+        🏆 Latihan Akhir BAB (Soal Tantangan Campuran)
+      </button>
+    </div>
+  `;
+
+  document.getElementById('inpNama').addEventListener('input', e => { state.nama = e.target.value; });
+
+  root.querySelectorAll('.grid-btn').forEach(btn => {
+    btn.addEventListener('click', () => { state.submateri = btn.dataset.sub; renderLanding(); });
+  });
+
+  root.querySelectorAll('.level-btn[data-lv]').forEach(btn => {
+    btn.addEventListener('click', () => { state.level = parseInt(btn.dataset.lv); renderLanding(); });
+  });
+
+  root.querySelectorAll('.level-btn[data-cnt]').forEach(btn => {
+    btn.addEventListener('click', () => { 
+      state.jumlahSoal = parseInt(btn.dataset.cnt); 
+      renderLanding(); 
+    });
+  });
+
+  document.getElementById('btnDlSoal').addEventListener('click', () => {
+    const pool = getQuestionPool(state.submateri, state.level, state.jumlahSoal);
+    cetakLembarSoalPaper(pool, MATERI_LABELS[state.submateri] + ' (Level ' + state.level + ')', false);
+  });
+
+  document.getElementById('btnDlSoalKJ').addEventListener('click', () => {
+    const pw = prompt("Masukkan Kata Sandi Guru:");
+    if(pw === CONFIG.TEACHER_PASSWORD) {
+      const pool = getQuestionPool(state.submateri, state.level, state.jumlahSoal);
+      cetakLembarSoalPaper(pool, MATERI_LABELS[state.submateri] + ' (Level ' + state.level + ')', true);
+    } else if(pw !== null) {
+      alert("Kata sandi salah!");
+    }
+  });
+
+  document.getElementById('btnMulai').addEventListener('click', () => {
+    const nama = (document.getElementById('inpNama').value || state.nama).trim();
+    if(!nama){ alert('Isi nama lengkap terlebih dahulu.'); return; }
+    state.nama = nama;
+    state.mode = 'materi';
+    state.isRetry = false;
+    state.rekapRecordCurrent = null;
+
+    const pool = getQuestionPool(state.submateri, state.level, state.jumlahSoal);
+    mulaiKuis(pool);
+  });
+
+  document.getElementById('btnFinalExam').addEventListener('click', () => {
+    const nama = (document.getElementById('inpNama').value || state.nama).trim();
+    if(!nama){ alert('Isi nama lengkap terlebih dahulu.'); return; }
+    state.nama = nama;
+    state.mode = 'final';
+    state.isRetry = false;
+    state.rekapRecordCurrent = null;
+
+    const poolAll = [...QUESTIONS.a, ...QUESTIONS.b, ...QUESTIONS.c, ...QUESTIONS.d];
+    mulaiKuis(shuffle(poolAll).slice(0, state.jumlahSoal));
+  });
+}
+
+function mulaiKuis(soalList){
+  state.questions = soalList;
+  state.idx = 0;
+  state.jawaban = new Array(soalList.length).fill(null);
+  if(!state.isRetry) state.detik = 0;
+  state.screen = 'quiz';
+  startTimer();
+  renderScreen();
+}
+
+/* =========================================================
+   5. RENDER: QUIZ SCREEN
+========================================================= */
+function renderQuiz(){
+  const root = document.getElementById('screen-root');
+  const q = state.questions[state.idx];
+  const isLast = state.idx === state.questions.length - 1;
+  const semuaTerjawab = state.jawaban.every(j => j !== null);
+  const subTitle = state.mode === 'final' ? 'Latihan Akhir BAB' : MATERI_LABELS[state.submateri];
+
+  root.innerHTML = `
+    <div class="quiz-head">
+      <div class="badge-tag">${subTitle} ${state.mode==='final'?'':'— Level '+state.level}</div>
+      <div class="brand-text">Soal ${state.idx+1} / ${state.questions.length}</div>
+    </div>
+
+    <div class="progress-row">
+      ${state.questions.map((_, i) => `
+        <div class="dot ${state.jawaban[i]!==null ? 'answered' : ''} ${i===state.idx ? 'current' : ''}" data-goto="${i}">${i+1}</div>
+      `).join('')}
+    </div>
+
+    <div class="card">
+      <div class="q-prompt">${q.prompt}</div>
+      <div id="optionsHolder">
+        ${q.options.map((opt, i) => `
+          <button class="option ${state.jawaban[state.idx] === i ? 'selected' : ''}" data-opt="${i}">
+            <span class="opt-letter">${String.fromCharCode(65+i)}</span>
+            <span class="opt-text">${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn-secondary" id="btnPrev" ${state.idx===0 ? 'disabled' : ''}>← Sebelumnya</button>
+      ${isLast
+        ? `<button class="primary-btn" id="btnSelesai" style="flex:1;" ${semuaTerjawab ? '' : 'disabled'}>Selesai</button>`
+        : `<button class="primary-btn" id="btnNext" style="flex:1;" ${state.jawaban[state.idx]!==null ? '' : 'disabled'}>Selanjutnya →</button>`
+      }
+    </div>
+  `;
+
+  renderMath(root);
+
+  root.querySelectorAll('.dot').forEach(d => {
+    d.addEventListener('click', () => { state.idx = parseInt(d.dataset.goto); renderScreen(); });
+  });
+
+  root.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.jawaban[state.idx] = parseInt(btn.dataset.opt);
+      renderScreen();
+    });
+  });
+
+  const btnPrev = document.getElementById('btnPrev');
+  if(btnPrev) btnPrev.addEventListener('click', () => { if(state.idx>0){ state.idx--; renderScreen(); } });
+  
+  const btnNext = document.getElementById('btnNext');
+  if(btnNext) btnNext.addEventListener('click', () => { state.idx++; renderScreen(); });
+
+  const btnSelesai = document.getElementById('btnSelesai');
+  if(btnSelesai) btnSelesai.addEventListener('click', submitKuis);
+}
+
+/* =========================================================
+   6. SUBMIT & PENGIRIMAN DATA
+========================================================= */
+function submitKuis(){
+  stopTimer();
+
+  if(!state.isRetry) {
+    let benar = 0;
+    const wrongQuestions = [];
+    const originalDetail = state.questions.map((q, i) => {
+      const isOk = state.jawaban[i] === q.answer;
+      if(isOk) benar++; else wrongQuestions.push(q);
+      return { q, jawabanAwal: state.jawaban[i], jawabanAkhir: state.jawaban[i], status: isOk ? 'HIJAU' : 'MERAH', benar: isOk };
+    });
+
+    const total = state.questions.length;
+    const skorAwal = Math.round((benar / total) * 100);
+
+    const rekapData = {
+      nama: state.nama,
+      materi: "Bilangan Rasional",
+      submateri: state.mode === 'final' ? 'Latihan Akhir BAB' : MATERI_LABELS[state.submateri],
+      level: state.mode === 'final' ? 'Campuran' : 'Lv. ' + state.level,
+      skorAwal: skorAwal,
+      skorAkhir: skorAwal,
+      benar, total,
+      durasi: state.detik,
+      durasiFmt: fmtWaktu(state.detik),
+      originalDetail: originalDetail,
+      wrongQuestions: wrongQuestions,
+      waktu: new Date().toISOString(),
+      hasRetried: false
+    };
+
+    state.rekapRecordCurrent = rekapData;
+    state.hasilTerakhir = rekapData;
+
+    simpanRekapLokal(rekapData);
+    kirimKeSheet(rekapData, false);
+
+  } else {
+    const rec = state.rekapRecordCurrent;
+    const wrongQsNext = [];
+
+    state.questions.forEach((q, i) => {
+      const isOkRetry = state.jawaban[i] === q.answer;
+      const item = rec.originalDetail.find(d => d.q.id === q.id);
+      if(item) {
+        item.jawabanAkhir = state.jawaban[i];
+        if(isOkRetry) {
+          item.status = 'KUNING';
+          item.benar = true;
+        } else {
+          item.status = 'MERAH_GELAP';
+          item.benar = false;
+          wrongQsNext.push(q);
+        }
+      }
+    });
+
+    const totalBenarAkhir = rec.originalDetail.filter(d => d.benar).length;
+    rec.skorAkhir = Math.round((totalBenarAkhir / rec.total) * 100);
+    rec.wrongQuestions = wrongQsNext;
+    rec.durasiFmt = fmtWaktu(state.detik);
+    rec.hasRetried = true;
+
+    state.hasilTerakhir = rec;
+    simpanRekapLokal(rec);
+    kirimKeSheet(rec, true);
+  }
+
+  state.screen = 'hasil';
+  renderScreen();
+}
+
+function simpanRekapLokal(hasil){
+  const list = getRiwayatLokal();
+  const idx = list.findIndex(r => r.nama === hasil.nama && r.submateri === hasil.submateri && r.level === hasil.level);
+  if(idx >= 0){ list[idx] = hasil; }
+  else { list.push(hasil); }
+  localStorage.setItem('br_rekap', JSON.stringify(list));
+}
+
+function kirimKeSheet(hasil, isUpdate){
+  if(!CONFIG.GAS_URL) return;
+  try{
+    const payload = {
+      nama: hasil.nama,
+      materi: hasil.materi,
+      submateri: hasil.submateri,
+      level: hasil.level,
+      skorAwal: hasil.skorAwal,
+      skorAkhir: hasil.skorAkhir,
+      durasi: hasil.durasi,
+      durasiFmt: hasil.durasiFmt,
+      waktu: hasil.waktu,
+      isUpdate: isUpdate,
+      jawaban: hasil.originalDetail.map((d, idx) => ({
+        no: idx + 1,
+        teks: d.jawabanAkhir !== null ? String.fromCharCode(65 + d.jawabanAkhir) : '-',
+        status: d.status
+      }))
+    };
+
+    fetch(CONFIG.GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify(payload)
+    }).catch(()=>{});
+  }catch(err){}
+}
+
+/* =========================================================
+   7. RENDER: HASIL KUIS & RIWAYAT
+========================================================= */
+function renderHasil(){
+  const root = document.getElementById('screen-root');
+  const h = state.hasilTerakhir;
+
+  const wrongItems = h.originalDetail.filter(d => !d.benar);
+  const correctItems = h.originalDetail.filter(d => d.benar);
+  const saranTeks = generateSaranPerbaikan(h.skorAkhir);
+
+  const tampilkanKJDanPembahasan = h.hasRetried || h.skorAwal === 100;
+
+  root.innerHTML = `
+    <div class="card">
+      <h2 style="text-align:center;font-size:22px;">Hasil Kuis — ${escapeHtml(h.submateri)}</h2>
+      
+      <div class="score-badge-row">
+        <div class="score-badge">
+          <div class="num">${h.skorAwal}</div>
+          <div class="denom">Skor Awal</div>
+        </div>
+        ${h.skorAkhir !== h.skorAwal || h.hasRetried ? `
+          <div class="score-badge akhir">
+            <div class="num">${h.skorAkhir}</div>
+            <div class="denom">Skor Akhir</div>
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="result-meta">
+        <div><div class="k">Nama</div><div class="v" style="font-size:16px;">${escapeHtml(h.nama)}</div></div>
+        <div><div class="k">Level</div><div class="v">${h.level}</div></div>
+        <div><div class="k">Waktu Total</div><div class="v">${h.durasiFmt}</div></div>
+      </div>
+
+      <div class="saran-box">
+        <h4>📌 Evaluasi & Rekomendasi</h4>
+        <div>${saranTeks}</div>
+      </div>
+
+      <!-- KELOMPOK SOAL SALAH (DI ATAS) -->
+      ${wrongItems.length > 0 ? `
+        <h3 style="font-size:16px;margin:20px 0 10px;color:var(--bad);">
+          ❌ Soal Perlu Diperbaiki / Salah (${wrongItems.length})
+        </h3>
+        ${!tampilkanKJDanPembahasan ? `
+          <div style="background:#fff3cd; border:1px solid #ffeeba; color:#856404; padding:10px 14px; border-radius:10px; font-size:13px; font-weight:700; margin-bottom:12px;">
+            🔒 Kunci Jawaban & Pembahasan disembunyikan. Klik "🔄 Coba Lagi Soal Salah" di bawah untuk mencoba memperbaiki nilai!
+          </div>
+        ` : ''}
+        <div>
+          ${wrongItems.map((d) => `
+            <div class="review-item wrong-item">
+              <div style="font-weight:700;font-size:14px;margin-bottom:6px;">${d.q.prompt}</div>
+              <div style="color:var(--bad);font-weight:700;font-size:13.5px;">Jawabanmu: ${d.jawabanAkhir!==null ? String.fromCharCode(65+d.jawabanAkhir)+'. '+d.q.options[d.jawabanAkhir] : '-'}</div>
+              
+              ${tampilkanKJDanPembahasan ? `
+                <div class="correct-ans-box">✅ Jawaban Benar: ${String.fromCharCode(65+d.q.answer)}. ${d.q.options[d.q.answer]}</div>
+                <div class="explanation-box"><b>Penjelasan:</b> ${d.q.penjelasan}</div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <!-- KELOMPOK SOAL BENAR (DI BAWAH) -->
+      ${correctItems.length > 0 ? `
+        <h3 style="font-size:16px;margin:20px 0 10px;color:var(--good);">
+          ✅ Soal Dijawab Benar (${correctItems.length})
+        </h3>
+        <div>
+          ${correctItems.map((d) => `
+            <div class="review-item correct-item">
+              <div style="font-weight:700;font-size:14px;margin-bottom:6px;">${d.q.prompt}</div>
+              <div style="color:var(--good);font-weight:700;font-size:13.5px;">Jawabanmu: ${String.fromCharCode(65+d.jawabanAkhir)}. ${d.q.options[d.jawabanAkhir]}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <div class="btn-row">
+        ${(h.wrongQuestions && h.wrongQuestions.length > 0 && !h.hasRetried) ? `
+          <button class="primary-btn accent" id="btnCobaLagiSalah" style="margin-top:0;">🔄 Coba Lagi Soal Salah</button>
+        ` : ''}
+        <button class="nav-btn-secondary" id="btnUnduhHasilSiswa">📄 Unduh Hasil Kuis Saya</button>
+        <button class="primary-btn" id="btnBeranda" style="margin-top:0;">🏠 Kembali ke Beranda</button>
+      </div>
+    </div>
+  `;
+
+  renderMath(root);
+
+  const btnRetry = document.getElementById('btnCobaLagiSalah');
+  if(btnRetry){
+    btnRetry.addEventListener('click', () => {
+      state.isRetry = true;
+      mulaiKuis(shuffle(h.wrongQuestions));
+    });
+  }
+
+  document.getElementById('btnUnduhHasilSiswa').addEventListener('click', () => {
+    unduhHasilKuisSiswaPaper(h);
+  });
+
+  document.getElementById('btnBeranda').addEventListener('click', () => {
+    state.screen = 'landing';
+    renderScreen();
+  });
+}
+
+/* RIWAYAT UNTUK SISWA */
+document.getElementById('btnStudentHistory').addEventListener('click', bukaRiwayatSiswa);
+
+function bukaRiwayatSiswa() {
+  const root = document.getElementById('modal-root');
+  const lokal = getRiwayatLokal();
+
+  root.innerHTML = `
+    <div class="modal-overlay">
+      <div class="modal-box" style="max-width:620px;">
+        <h3>📜 Riwayat Pengerjaan Kuis</h3>
+        <p>Berikut adalah catatan nilai kuis yang telah diselesaikan di perangkat ini.</p>
+        
+        <div class="table-scroll">
+          ${lokal.length === 0 ? '<p style="font-size:13.5px;color:var(--ink-soft);">Belum ada kuis yang diselesaikan.</p>' : `
+            <table class="recap">
+              <thead><tr><th>Nama</th><th>Sub-Materi</th><th>Level</th><th>Skor Awal</th><th>Skor Akhir</th><th>Waktu</th></tr></thead>
+              <tbody>
+                ${lokal.map(r => `
+                  <tr>
+                    <td><b>${escapeHtml(r.nama)}</b></td>
+                    <td>${escapeHtml(r.submateri)}</td>
+                    <td>${r.level}</td>
+                    <td>${r.skorAwal}</td>
+                    <td><b style="color:var(--good);">${r.skorAkhir}</b></td>
+                    <td>${r.durasiFmt || r.durasi + ' dtk'}</td>
+                  </tr>
+                `).reverse().join('')}
+              </tbody>
+            </table>
+          `}
+        </div>
+
+        <button class="primary-btn" id="btnTutupRiwayat" style="margin-top:14px;">Tutup</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('btnTutupRiwayat').addEventListener('click', () => root.innerHTML = '');
+}
+
+/* =========================================================
+   8. PANEL GURU & FUNGSI CETAK
+========================================================= */
+document.getElementById('btnTeacher').addEventListener('click', bukaLoginGuru);
+document.getElementById('btnHome').addEventListener('click', () => { state.screen = 'landing'; renderScreen(); });
+document.getElementById('brandBtn').addEventListener('click', () => { state.screen = 'landing'; renderScreen(); });
+
+function bukaLoginGuru(){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `
+    <div class="modal-overlay">
+      <div class="modal-box">
+        <h3>Panel Guru</h3>
+        <p>Masukkan kata sandi guru untuk mengelola rekap data.</p>
+        <label class="field-label" for="inpPw">Kata Sandi</label>
+        <input type="password" id="inpPw" placeholder="••••••••">
+        <div class="modal-actions">
+          <button class="nav-btn-secondary" id="btnTutupPw">Batal</button>
+          <button class="primary-btn" id="btnMasukPw" style="margin-top:0;">Masuk</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('btnTutupPw').addEventListener('click', () => root.innerHTML = '');
+  document.getElementById('btnMasukPw').addEventListener('click', () => {
+    if(document.getElementById('inpPw').value === CONFIG.TEACHER_PASSWORD){
+      root.innerHTML = '';
+      tampilkanPanelGuru();
+    } else { alert('Kata sandi salah.'); }
+  });
+}
+
+function tampilkanPanelGuru(){
+  const root = document.getElementById('modal-root');
+  const lokal = getRiwayatLokal();
+
+  root.innerHTML = `
+    <div class="modal-overlay">
+      <div class="modal-box" style="max-width:680px;">
+        <h3>Rekap Jawaban Siswa (Panel Guru)</h3>
+        <p>Akses rekap pengerjaan kuis siswa secara lokal maupun dari Google Sheets.</p>
+        
+        <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+          <button class="nav-btn-secondary" id="btnMuatSheet" style="flex:1;min-width:160px;">🔄 Muat dari Google Sheets</button>
+          <button class="primary-btn accent" id="btnCetakRekapGuru" style="flex:1;min-width:160px;margin-top:0;">📄 Unduh PDF Rekap Guru</button>
+          <button class="nav-btn-secondary" id="btnCetakMasterSoalKJ" style="flex:1;min-width:160px;margin-top:0;">📑 Unduh Master Soal + KJ (Guru)</button>
+        </div>
+
+        <div class="table-scroll" id="recapTableHolder">
+          ${renderTabelRekap(lokal)}
+        </div>
+
+        <button class="nav-btn-secondary" id="btnBukaSetting" style="width:100%;margin-top:14px;">⚙️ Pengaturan Integrasi Google Sheets</button>
+        <button class="primary-btn" id="btnTutupPanel" style="margin-top:8px;">Tutup</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('btnTutupPanel').addEventListener('click', () => root.innerHTML = '');
+  document.getElementById('btnBukaSetting').addEventListener('click', bukaPengaturan);
+  
+  let currentActiveRekap = lokal;
+
+  document.getElementById('btnCetakRekapGuru').addEventListener('click', () => {
+    if(!currentActiveRekap || currentActiveRekap.length === 0){
+      alert('Belum ada data rekap untuk dicetak.');
+      return;
+    }
+    unduhPdfRekapGuru(currentActiveRekap);
+  });
+
+  document.getElementById('btnCetakMasterSoalKJ').addEventListener('click', () => {
+    const allQs = [...QUESTIONS.a, ...QUESTIONS.b, ...QUESTIONS.c, ...QUESTIONS.d];
+    cetakLembarSoalPaper(allQs, 'MASTER SOAL KUIS BILANGAN RASIONAL', true);
+  });
+
+  const btnMuat = document.getElementById('btnMuatSheet');
+  btnMuat.addEventListener('click', async () => {
+    if(!CONFIG.GAS_URL){
+      alert('URL Google Script belum diisi.');
+      return;
+    }
+    btnMuat.textContent = 'Memuat...';
+    try{
+      const res = await fetch(CONFIG.GAS_URL);
+      const data = await res.json();
+      currentActiveRekap = data;
+      document.getElementById('recapTableHolder').innerHTML = renderTabelRekap(data);
+    }catch(err){
+      alert('Gagal memuat data dari Google Sheets. Pastikan izin Deploy sudah "Anyone" (Siapa Saja).');
+    }
+    btnMuat.textContent = '🔄 Muat dari Google Sheets';
+  });
+}
+
+function renderTabelRekap(list){
+  if(!list || list.length === 0) return '<p style="font-size:13.5px;color:var(--ink-soft);padding:10px 0;">Belum ada data rekap siswa.</p>';
+  return `
+    <table class="recap">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Nama</th>
+          <th>Sub-Materi</th>
+          <th>Level</th>
+          <th>Skor Awal</th>
+          <th>Skor Akhir</th>
+          <th>Saran Perbaikan</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${list.map(r => `
+          <tr>
+            <td>${new Date(r.waktu||Date.now()).toLocaleDateString('id-ID')}</td>
+            <td><b>${escapeHtml(r.nama)}</b></td>
+            <td>${escapeHtml(r.submateri)}</td>
+            <td>${r.level}</td>
+            <td>${r.skorAwal}</td>
+            <td><b>${r.skorAkhir}</b></td>
+            <td><small>${generateSaranPerbaikan(r.skorAkhir)}</small></td>
+          </tr>
+        `).slice().reverse().join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function unduhPdfRekapGuru(list) {
+  const printHolder = document.getElementById('print-root');
+  printHolder.innerHTML = `
+    <div class="print-paper">
+      <div class="print-header">
+        <h2>REKAP HASIL KUIS BILANGAN RASIONAL KELAS VII</h2>
+        <h3>Tanggal Cetak: ${new Date().toLocaleString('id-ID')}</h3>
+      </div>
+      ${renderTabelRekap(list)}
+    </div>
+  `;
+  window.print();
+}
+
+/* FUNGSI CETAK LEMBAR SOAL LENGKAP PILIHAN GANDA */
+function cetakLembarSoalPaper(soalList, judul, includeKJ) {
+  const printHolder = document.getElementById('print-root');
+  printHolder.innerHTML = `
+    <div class="print-paper">
+      <div class="print-header">
+        <h2>LEMBAR SOAL KUIS MATEMATIKA KELAS VII</h2>
+        <h3>MATERI: ${escapeHtml(judul.toUpperCase())}</h3>
+        <div class="student-info-grid">
+          <div><b>Nama Siswa:</b> ______________________</div>
+          <div><b>Kelas:</b> VII ____</div>
+          <div><b>Tanggal:</b> ______________________</div>
+          <div><b>Nilai Akhir:</b> ________ / 100</div>
+        </div>
+      </div>
+      <div style="font-size:10pt; margin: 10px 0;"><b>Petunjuk:</b> Pilihlah salah satu jawaban A, B, C, atau D yang paling tepat!</div>
+      
+      <div>
+        ${soalList.map((q, idx) => `
+          <div class="print-q-item">
+            <div class="print-q-prompt"><b>${idx + 1}.</b> ${q.prompt}</div>
+            <div class="print-q-options">
+              ${q.options.map((opt, optIdx) => `
+                <div class="print-opt">
+                  <b>${String.fromCharCode(65 + optIdx)}.</b> ${opt}
+                </div>
+              `).join('')}
+            </div>
+            ${includeKJ ? `
+              <div class="print-kj-box">
+                <b>✅ Kunci Jawaban:</b> ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}<br/>
+                <b>💡 Pembahasan:</b> ${q.penjelasan}
+              </div>
+            ` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  renderMath(printHolder);
+  setTimeout(() => { window.print(); }, 300);
+}
+
+/* FUNGSI UNDUH HASIL KUIS SISWA (TERSIMPAN SEMUA NOMOR) */
+function unduhHasilKuisSiswaPaper(h) {
+  const printHolder = document.getElementById('print-root');
+  const allDetail = h.originalDetail || [];
+  const wrongItems = allDetail.filter(d => !d.benar);
+  const correctItems = allDetail.filter(d => d.benar);
+  const saranTeks = generateSaranPerbaikan(h.skorAkhir);
+  const tampilkanKJ = h.hasRetried || h.skorAwal === 100;
+  
+  printHolder.innerHTML = `
+    <div class="print-paper">
+      <div class="print-header">
+        <h2>LEMBAR HASIL KUIS BILANGAN RASIONAL</h2>
+        <h3>${escapeHtml(h.submateri.toUpperCase())} (${h.level})</h3>
+        <div class="student-info-grid">
+          <div><b>Nama Siswa:</b> ${escapeHtml(h.nama)}</div>
+          <div><b>Waktu Pengerjaan:</b> ${h.durasiFmt}</div>
+          <div><b>Skor Awal:</b> ${h.skorAwal}</div>
+          <div><b>Skor Akhir:</b> ${h.skorAkhir}</div>
+        </div>
+      </div>
+
+      <div class="print-saran-box">
+        📌 <b>Saran Perbaikan:</b> ${saranTeks}
+      </div>
+
+      <h3 style="margin-top:14px; font-size:11pt;">Daftar Jawaban Siswa (Total ${allDetail.length} Soal):</h3>
+      
+      <!-- SOAL SALAH DI ATAS -->
+      ${wrongItems.length > 0 ? `
+        <div style="font-weight:bold; color:#b54a3a; margin:10px 0 6px;">❌ Soal Perlu Diperbaiki / Salah (${wrongItems.length})</div>
+        <div>
+          ${wrongItems.map((d) => `
+            <div class="print-q-item wrong">
+              <div class="print-q-prompt"><b>Soal:</b> ${d.q.prompt}</div>
+              <div style="color:#b54a3a; font-weight:700;">Jawaban Siswa: ${d.jawabanAkhir!==null ? String.fromCharCode(65+d.jawabanAkhir)+'. '+d.q.options[d.jawabanAkhir] : '-'}</div>
+              ${tampilkanKJ ? `
+                <div class="print-kj-box">
+                  <b>✅ Kunci Jawaban:</b> ${String.fromCharCode(65+d.q.answer)}. ${d.q.options[d.q.answer]}<br/>
+                  <b>💡 Penjelasan:</b> ${d.q.penjelasan}
+                </div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <!-- SOAL BENAR DI BAWAH -->
+      ${correctItems.length > 0 ? `
+        <div style="font-weight:bold; color:#3f7a5b; margin:14px 0 6px;">✅ Soal Dijawab Benar (${correctItems.length})</div>
+        <div>
+          ${correctItems.map((d) => `
+            <div class="print-q-item correct">
+              <div class="print-q-prompt"><b>Soal:</b> ${d.q.prompt}</div>
+              <div style="color:#3f7a5b; font-weight:700;">Jawaban Siswa: ${String.fromCharCode(65+d.jawabanAkhir)}. ${d.q.options[d.jawabanAkhir]}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+    </div>
+  `;
+  renderMath(printHolder);
+  setTimeout(() => { window.print(); }, 300);
+}
+
+function bukaPengaturan(){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `
+    <div class="modal-overlay">
+      <div class="modal-box" style="max-width:560px;">
+        <h3>Pengaturan Integrasi</h3>
+        <p>Masukkan URL Web App Google Apps Script kamu di bawah ini:</p>
+
+        <label class="field-label">URL Web App Google Script</label>
+        <input type="text" id="inpGasUrl" placeholder="https://script.google.com/macros/s/xxxx/exec" value="${escapeHtml(CONFIG.GAS_URL)}">
+
+        <label class="field-label">Kata Sandi Guru</label>
+        <input type="text" id="inpPwSet" value="${escapeHtml(CONFIG.TEACHER_PASSWORD)}">
+
+        <div class="modal-actions" style="margin-top:14px;">
+          <button class="nav-btn-secondary" id="btnBatalSet" style="flex:1;">Batal</button>
+          <button class="primary-btn" id="btnSimpanSet" style="flex:1;margin-top:0;">Simpan</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('btnBatalSet').addEventListener('click', () => root.innerHTML = '');
+  document.getElementById('btnSimpanSet').addEventListener('click', () => {
+    const url = document.getElementById('inpGasUrl').value.trim();
+    const pw = document.getElementById('inpPwSet').value.trim() || 'guru123';
+    localStorage.setItem('br_gas_url', url);
+    localStorage.setItem('br_teacher_pw', pw);
+    CONFIG.GAS_URL = url;
+    CONFIG.TEACHER_PASSWORD = pw;
+    root.innerHTML = '';
+    alert('Pengaturan berhasil disimpan!');
+  });
+}
+
+/* =========================================================
+   9. ROUTER
+========================================================= */
+function renderScreen(){
+  if(state.screen === 'landing') renderLanding();
+  else if(state.screen === 'quiz') renderQuiz();
+  else if(state.screen === 'hasil') renderHasil();
+}
+
+renderScreen();
+</script>
+</body>
+</html>
